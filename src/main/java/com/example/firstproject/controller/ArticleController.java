@@ -88,4 +88,31 @@ public class ArticleController {
         //뷰 페이지 설정하기
         return "articles/edit";
     }
+
+    //수정
+    @PostMapping("/articles/update")//1.1url요청접수
+    public String update(ArticleForm form) {//매개변수 DTO받아오기
+
+        log.info(form.toString());//잘 들어오는 지 확인
+        //1. DTO를 엔티티로 변환하기
+        Article articleEntity = form.toEntity();//1-1 DTO(form)를 엔티니(articleEntity)로 변환하기
+        log.info(articleEntity.toString());//1-2 엔티티로 잘 변환됐는지 로그 찍기
+
+
+        //2. 엔티티를 DB에 저장하기
+        //2-1.DB에서 기존 데이터 가져오기
+        Article target = articleRepository.findById(articleEntity.getId()).orElse(null);
+        //2)데이터 저장    1)DB에서 데이터 찾기                                 3)데이터가 없으면  null반환
+
+        //2-2. 기존 데이터 값을 갱신하기
+        if (target != null){//수정 시 입력 대상의 존재 여부를 검증하도록 if조건문 넣음
+            articleRepository.save(articleEntity);//엔티티를 DB에 저장(갱신)
+        }
+
+
+        //3. 수정 결과를 페이지로 리다이렉트하기
+
+
+        return "redirect:/articles/"+articleEntity.getId();
+    }
 }
