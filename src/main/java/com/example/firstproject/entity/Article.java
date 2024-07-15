@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import lombok.extern.slf4j.Slf4j;
 
 @AllArgsConstructor //생성자 대체 어노테이션
 @NoArgsConstructor// 기본 생성자 추가 어노테이션
@@ -23,4 +24,10 @@ public class Article {
     private String content;
 
 
+    public void patch(Article article) {
+        if (article.title != null)
+            this.title = article.title;
+        if (article.content != null)
+            this.content = article.content;
+    }
 }
