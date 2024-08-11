@@ -1,6 +1,7 @@
 package com.example.firstproject.dto;
 
 
+
 import com.example.firstproject.entity.Comment;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -27,4 +28,6 @@ public class CommentDto {
 
         );
     }
+
 }
+

@@ -1,17 +1,15 @@
 package com.example.firstproject.service;
 
-import com.example.firstproject.dto.CommentDto;
+
 import com.example.firstproject.entity.Article;
 import com.example.firstproject.entity.Comment;
 import com.example.firstproject.repository.ArticleRepository;
 import com.example.firstproject.repository.CommentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
+
 
 import java.util.ArrayList;
 import java.util.List;
@@ -51,7 +49,19 @@ public class CommentService {
                 .orElseThrow(() ->new IllegalArgumentException("댓글 생성 실패!" +
                         "대상 게시글이 없습니다."));
         //2. 댓글 엔티티 생성
+        Comment comment = Comment.createComment(dto, article);
+
         //3. 댓글 엔티티를 DB에 저장
+        Comment created = commentRepository.save(comment);
         //4. DTO로 변환해 반환
+        return CommentDto.createCommentDto(created);
+    }
+
+    public static Comment createComment(CommentDto dto, Article article){
+        //예외발생
+        if(dto.getId() != null){
+            throw new IllegalArgumentException("댓글 생성 실패! 댓글의 id가 없어야 합니다.");
+        }
+        //엔티티 생성 및 반환
     }
 }
